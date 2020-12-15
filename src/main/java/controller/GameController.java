@@ -1,5 +1,6 @@
 package controller;
 
+import domain.NumberValidator;
 import view.InputView;
 import view.OutputView;
 
@@ -14,5 +15,6 @@ public class GameController {
 
     public void run() {
         OutputView.printReceiveNumberNotice();
+        System.out.println(NumberValidator.makeNumber(this.inputView.receiveSomethingFromUser()));
     }
 }
