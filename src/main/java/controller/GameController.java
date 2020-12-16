@@ -1,6 +1,8 @@
 package controller;
 
-import domain.NumberValidator;
+import domain.Computer;
+import domain.Player;
+import domain.baseball.RandomNumbers;
 import view.InputView;
 import view.OutputView;
 
@@ -13,8 +15,22 @@ public class GameController {
         this.inputView = new InputView(scanner);
     }
 
+    public static Player makePlayerUntilValid(InputView inputView) {
+        try {
+            OutputView.printReceiveNumberNotice();
+            return new Player(inputView.receiveSomethingFromUser());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            makePlayerUntilValid(inputView);
+        }
+        throw new IllegalArgumentException("무언가 이상이 있다");
+    }
+
     public void run() {
-        OutputView.printReceiveNumberNotice();
-        System.out.println(NumberValidator.makeNumber(this.inputView.receiveSomethingFromUser()));
+        RandomNumbers randomNumbers = new RandomNumbers();
+
+        Player player = makePlayerUntilValid(this.inputView);
+
+        Computer.makeResult(randomNumbers, player);
     }
 }
