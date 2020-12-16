@@ -30,7 +30,7 @@ public class GameController {
         RandomNumbers randomNumbers = new RandomNumbers();
 
         Player player = makePlayerUntilValid(this.inputView);
-
-        Computer.makeResult(randomNumbers, player);
+        Computer computer = new Computer();
+        System.out.println(computer.makeResult(randomNumbers, player));
     }
 }
