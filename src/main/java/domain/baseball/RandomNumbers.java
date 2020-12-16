@@ -27,7 +27,7 @@ public class RandomNumbers {
         }
     }
 
-    public Integer giveNumber(int i) {
+    public Integer getNumber(int i) {
         return randomNumbers.get(i);
     }
 }

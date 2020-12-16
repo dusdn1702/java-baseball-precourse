@@ -3,6 +3,8 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.baseball.RandomNumber.LOWER_BOUNDARY;
+
 public class NumberValidator {
     private static final int NUMBERS_SIZE = 3;
 
@@ -16,7 +18,7 @@ public class NumberValidator {
 
     private static void checkThreeNumbers(String receiveSomethingFromUser) {
         if (receiveSomethingFromUser.length() != NUMBERS_SIZE) {
-            throw new IllegalArgumentException("숫자는 세 글자를 입력해야 합니다.");
+            throw new IllegalArgumentException("숫자는 " + NUMBERS_SIZE + " 글자를 입력해야 합니다.");
         }
     }
 
@@ -41,15 +43,15 @@ public class NumberValidator {
         return integers;
     }
 
-    private static void checkDistinctNumber(Integer nowNumber, List<Integer> integers) {
-        if (integers.stream().anyMatch(integer -> integer.equals(nowNumber))) {
-            throw new IllegalArgumentException("서로 다른 세자리수를 입력해주세요.");
+    private static void checkDistinctNumber(Integer nowNumber, List<Integer> enrolledNumbers) {
+        if (enrolledNumbers.stream().anyMatch(integer -> integer.equals(nowNumber))) {
+            throw new IllegalArgumentException("서로 다른 수를 입력해주세요.");
         }
     }
 
-    private static void checkBoundary(Integer parseInt) {
-        if (parseInt < 1) {
-            throw new IllegalArgumentException("숫자는 1부터 입니다.");
+    private static void checkBoundary(Integer number) {
+        if (number < LOWER_BOUNDARY) {
+            throw new IllegalArgumentException("자연수를 입력해주세요.");
         }
     }
 }

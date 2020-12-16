@@ -1,38 +1,45 @@
 package domain;
 
-import domain.baseball.BallStrike;
+import domain.baseball.Ball;
 import domain.baseball.RandomNumbers;
+import domain.baseball.Strike;
 
 import static domain.baseball.RandomNumbers.NUMBERS_SIZE;
 
 public class Computer {
-    private final BallStrike ballStrike;
+    public static final int INIT_COUNT = 0;
+    public static final String NOTHING = "";
+    private static final String PRINT_NOTHING = "낫싱";
+
+    private final Ball ball;
+    private final Strike strike;
 
     public Computer() {
-        this.ballStrike = new BallStrike();
+        this.ball = new Ball();
+        this.strike = new Strike();
     }
 
     public String makeResult(RandomNumbers randomNumbers, Player player) {
         for (int i = 0; i < NUMBERS_SIZE; i++) {
-            if (player.giveNumber(i).equals(randomNumbers.giveNumber(i))) {
-                this.ballStrike.increaseStrikes();
+            if (player.getNumberWithIndex(i).equals(randomNumbers.getNumber(i))) {
+                this.strike.increaseStrikes();
                 continue;
             }
-            if (player.isSameThanAnyWhere(randomNumbers.giveNumber(i))) {
-                this.ballStrike.increaseBalls();
+            if (player.isSameThanAnyWhere(randomNumbers.getNumber(i))) {
+                this.ball.increaseBalls();
             }
         }
         return getResult();
     }
 
     public String getResult() {
-        if (this.ballStrike.toStringBall().equals("") && this.ballStrike.toStringStrike().equals("")) {
-            return "낫싱";
+        if (this.ball.toString().equals(NOTHING) && this.strike.toString().equals(NOTHING)) {
+            return PRINT_NOTHING;
         }
-        return this.ballStrike.toStringBall() + this.ballStrike.toStringStrike();
+        return this.ball.toString() + this.strike.toString();
     }
 
     public boolean isAnswer() {
-        return this.ballStrike.isAnswer();
+        return this.strike.isAnswer();
     }
 }
