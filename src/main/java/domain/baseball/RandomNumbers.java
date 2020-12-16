@@ -6,23 +6,28 @@ import java.util.List;
 public class RandomNumbers {
     public static final int NUMBERS_SIZE = 3;
 
-    private final List<RandomNumber> randomNumbers = new ArrayList<>();
+    private List<Integer> randomNumbers;
 
     public RandomNumbers() {
-        makeRandomNumbers();
+        this.randomNumbers = new ArrayList<>();
+        this.randomNumbers = makeRandomNumbers();
     }
 
-    public void makeRandomNumbers() {
-        for (int i = 0; i < NUMBERS_SIZE; i++) {
-            this.randomNumbers.add(new RandomNumber());
+    public List<Integer> makeRandomNumbers() {
+        do {
+            addDistinctNumber();
+        } while (this.randomNumbers.size() != NUMBERS_SIZE);
+        return this.randomNumbers;
+    }
+
+    private void addDistinctNumber() {
+        Integer nowRandomNumber = RandomNumber.makeRandomNumber();
+        if (this.randomNumbers.stream().noneMatch(randomNumber -> randomNumber.equals(nowRandomNumber))) {
+            this.randomNumbers.add(nowRandomNumber);
         }
     }
 
-    public boolean isSameNumber(int index, Integer comparedNumber) {
-        return randomNumbers.get(index).isSameThan(comparedNumber);
-    }
-
-    public boolean isSameAnyWhere(Integer giveNumber) {
-        return randomNumbers.stream().anyMatch(randomNumber -> randomNumber.isSameThan(giveNumber));
+    public Integer giveNumber(int i) {
+        return randomNumbers.get(i);
     }
 }

@@ -14,10 +14,11 @@ public class Computer {
 
     public String makeResult(RandomNumbers randomNumbers, Player player) {
         for (int i = 0; i < NUMBERS_SIZE; i++) {
-            if (randomNumbers.isSameNumber(i, player.giveNumber(i))) {
+            if (player.giveNumber(i).equals(randomNumbers.giveNumber(i))) {
                 this.ballStrike.increaseStrikes();
+                continue;
             }
-            if (randomNumbers.isSameAnyWhere(player.giveNumber(i))) {
+            if (player.isSameThanAnyWhere(randomNumbers.giveNumber(i))) {
                 this.ballStrike.increaseBalls();
             }
         }
@@ -25,9 +26,13 @@ public class Computer {
     }
 
     public String getResult() {
-        if (this.ballStrike.toStringBall() == null && this.ballStrike.toStringStrike() == null) {
+        if (this.ballStrike.toStringBall().equals("") && this.ballStrike.toStringStrike().equals("")) {
             return "낫싱";
         }
         return this.ballStrike.toStringBall() + this.ballStrike.toStringStrike();
+    }
+
+    public boolean isAnswer() {
+        return this.ballStrike.isAnswer();
     }
 }

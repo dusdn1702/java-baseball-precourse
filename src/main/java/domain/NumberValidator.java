@@ -8,10 +8,10 @@ public class NumberValidator {
 
     public static List<Integer> makeNumber(String receiveSomethingFromUser) {
         checkThreeNumbers(receiveSomethingFromUser);
-        if (isNumber(receiveSomethingFromUser)) {
-            return makeThreeNumbers(receiveSomethingFromUser);
+        if (!isNumber(receiveSomethingFromUser)) {
+            throw new IllegalArgumentException("숫자만 입력해주세요.");
         }
-        throw new IllegalArgumentException("무언가 오류가 있다.");
+        return makeThreeNumbers(receiveSomethingFromUser);
     }
 
     private static void checkThreeNumbers(String receiveSomethingFromUser) {
@@ -33,15 +33,23 @@ public class NumberValidator {
         List<Integer> integers = new ArrayList<>();
         //    return Stream.of(receiveSomethingFromUser.toCharArray()).map(c->checkBoundary(Integer.parseInt(String.valueOf(c)))).collect(Collectors.toList());
         for (char c : receiveSomethingFromUser.toCharArray()) {
-            integers.add(checkBoundary(Integer.parseInt(String.valueOf(c))));
+            Integer nowNumber = Integer.parseInt(String.valueOf(c));
+            checkDistinctNumber(nowNumber, integers);
+            checkBoundary(nowNumber);
+            integers.add(nowNumber);
         }
         return integers;
     }
 
-    private static Integer checkBoundary(int parseInt) {
+    private static void checkDistinctNumber(Integer nowNumber, List<Integer> integers) {
+        if (integers.stream().anyMatch(integer -> integer.equals(nowNumber))) {
+            throw new IllegalArgumentException("서로 다른 세자리수를 입력해주세요.");
+        }
+    }
+
+    private static void checkBoundary(Integer parseInt) {
         if (parseInt < 1) {
             throw new IllegalArgumentException("숫자는 1부터 입니다.");
         }
-        return parseInt;
     }
 }

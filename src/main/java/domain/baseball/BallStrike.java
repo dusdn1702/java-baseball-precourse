@@ -19,15 +19,19 @@ public class BallStrike {
 
     public String toStringBall() {
         if (countOfBalls == 0) {
-            return null;
+            return "";
         }
-        return String.valueOf(countOfBalls) + "볼 ";
+        return countOfBalls + "볼 ";
     }
 
     public String toStringStrike() {
         if (countOfStrikes == 0) {
-            return null;
+            return "";
         }
-        return String.valueOf(countOfStrikes) + "스트라이크 ";
+        return countOfStrikes + "스트라이크 ";
+    }
+
+    public boolean isAnswer() {
+        return countOfStrikes == 3;
     }
 }
